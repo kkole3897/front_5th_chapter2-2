@@ -1,3 +1,6 @@
+// TODO: fsd layer에 맞춰 이동
+import { type DiscountType as CouponDiscountType } from "./refactoring/entities/coupon";
+
 export interface Product {
   id: string;
   name: string;
@@ -19,6 +22,6 @@ export interface CartItem {
 export interface Coupon {
   name: string;
   code: string;
-  discountType: 'amount' | 'percentage';
+  discountType: CouponDiscountType;
   discountValue: number;
 }
