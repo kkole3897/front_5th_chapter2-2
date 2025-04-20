@@ -7,19 +7,30 @@ export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
 
-  const addToCart = (product: Product) => {};
+  const addToCart = (product: Product) => {
+    if (product.stock <= 0) {
+      return;
+    }
 
-  const removeFromCart = (productId: string) => {};
+    // TODO: model로 분리해서 추상화 level 맞추기
+    setCart((oldCart) => [...oldCart, { product, quantity: 1 }]);
+  };
 
-  const updateQuantity = (productId: string, newQuantity: number) => {};
+  const removeFromCart = (productId: string) => {
+    setCart((oldCart) => updateCartItemQuantity(oldCart, productId, 0));
+  };
 
-  const applyCoupon = (coupon: Coupon) => {};
+  const updateQuantity = (productId: string, newQuantity: number) => {
+    setCart((oldCart) =>
+      updateCartItemQuantity(oldCart, productId, newQuantity)
+    );
+  };
 
-  const calculateTotal = () => ({
-    totalBeforeDiscount: 0,
-    totalAfterDiscount: 0,
-    totalDiscount: 0,
-  });
+  const applyCoupon = (coupon: Coupon) => {
+    setSelectedCoupon(coupon);
+  };
+
+  const calculateTotal = () => calculateCartTotal(cart, selectedCoupon);
 
   return {
     cart,
