@@ -9,6 +9,21 @@ export const useCart = () => {
 
   const addToCart = (product: Product) => {
     if (product.stock <= 0) {
+      // TODO: 재고 부족할 때 addToCart하는 경우 커스텀 에러 정의
+      throw new Error("재고가 부족합니다.");
+    }
+
+    // TODO: model로 분리해서 추상화 level 맞추기
+    const matchedCartItem = cart.find((item) => item.product.id === product.id);
+
+    if (matchedCartItem) {
+      setCart((oldCart) =>
+        updateCartItemQuantity(
+          oldCart,
+          product.id,
+          matchedCartItem.quantity + 1
+        )
+      );
       return;
     }
 
