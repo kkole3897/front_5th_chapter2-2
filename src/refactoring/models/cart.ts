@@ -1,4 +1,4 @@
-import { CartItem, Coupon } from "../../types";
+import { CartItem, Coupon, Product } from "../../types";
 import { DISCOUNT_TYPE } from "../entities/coupon";
 
 const isApplicableDiscount = (
@@ -96,6 +96,19 @@ export const calculateCartTotal = (
   };
 };
 
+export const createCartItem = (cart: CartItem[], product: Product) => {
+  const newCartItem: CartItem = { product, quantity: 1 };
+  const newCart = [...cart, newCartItem];
+
+  return newCart;
+};
+
+export const removeCartItem = (cart: CartItem[], productId: Product["id"]) => {
+  const newCart = cart.filter((item) => item.product.id !== productId);
+
+  return newCart;
+};
+
 export const updateCartItemQuantity = (
   cart: CartItem[],
   productId: string,
@@ -103,7 +116,7 @@ export const updateCartItemQuantity = (
 ): CartItem[] => {
   // 수량이 0이하인 경우 장바구니에서 상품 제거
   if (newQuantity <= 0) {
-    return cart.filter((item) => item.product.id !== productId);
+    return removeCartItem(cart, productId);
   }
 
   const updatedCart = cart.map((item) => {
@@ -127,4 +140,11 @@ export const updateCartItemQuantity = (
   });
 
   return updatedCart;
+};
+
+export const findCartItemByProductId = (
+  cart: CartItem[],
+  productId: Product["id"]
+) => {
+  return cart.find((item) => item.product.id === productId);
 };

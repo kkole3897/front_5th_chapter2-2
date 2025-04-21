@@ -1,7 +1,13 @@
 // useCart.ts
 import { useState } from "react";
 import { CartItem, Coupon, Product } from "../../types";
-import { calculateCartTotal, updateCartItemQuantity } from "../models/cart";
+import {
+  calculateCartTotal,
+  updateCartItemQuantity,
+  createCartItem,
+  removeCartItem,
+  findCartItemByProductId,
+} from "../models/cart";
 
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -13,26 +19,20 @@ export const useCart = () => {
       throw new Error("재고가 부족합니다.");
     }
 
-    // TODO: model로 분리해서 추상화 level 맞추기
-    const matchedCartItem = cart.find((item) => item.product.id === product.id);
+    const foundCartItem = findCartItemByProductId(cart, product.id);
 
-    if (matchedCartItem) {
+    if (foundCartItem) {
       setCart((oldCart) =>
-        updateCartItemQuantity(
-          oldCart,
-          product.id,
-          matchedCartItem.quantity + 1
-        )
+        updateCartItemQuantity(oldCart, product.id, foundCartItem.quantity + 1)
       );
       return;
     }
 
-    // TODO: model로 분리해서 추상화 level 맞추기
-    setCart((oldCart) => [...oldCart, { product, quantity: 1 }]);
+    setCart((oldCart) => createCartItem(oldCart, product));
   };
 
   const removeFromCart = (productId: string) => {
-    setCart((oldCart) => updateCartItemQuantity(oldCart, productId, 0));
+    setCart((oldCart) => removeCartItem(oldCart, productId));
   };
 
   const updateQuantity = (productId: string, newQuantity: number) => {
