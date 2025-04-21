@@ -8,15 +8,14 @@ import {
   removeCartItem,
   findCartItemByProductId,
 } from "../models/cart";
-
+import { OutOfStockError } from "../models/product";
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
 
   const addToCart = (product: Product) => {
     if (product.stock <= 0) {
-      // TODO: 재고 부족할 때 addToCart하는 경우 커스텀 에러 정의
-      throw new Error("재고가 부족합니다.");
+      throw new OutOfStockError(product);
     }
 
     const foundCartItem = findCartItemByProductId(cart, product.id);
