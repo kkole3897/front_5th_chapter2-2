@@ -1,6 +1,6 @@
 // useCart.ts
 import { useState } from "react";
-import { CartItem } from "../../types";
+import { CartItem } from "../features/cart/model";
 import { Coupon } from "../entities/coupon/model";
 import { Product } from "../entities/product/model/product";
 import {
@@ -9,7 +9,7 @@ import {
   createCartItem,
   removeCartItem,
   findCartItemByProductId,
-} from "../models/cart";
+} from "../features/cart/model";
 import { OutOfStockError } from "../entities/product/model/errors";
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);

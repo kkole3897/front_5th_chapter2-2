@@ -10,11 +10,12 @@ import {
 } from "@testing-library/react";
 import CartPage from "@/refactoring/pages/cart";
 import AdminPage from "@/refactoring/pages/admin";
-import { CartItem } from "../../types";
+import { CartItem } from "@/refactoring/features/cart/model";
 import { Coupon } from "@/refactoring/entities/coupon/model";
 import { Product } from "../../refactoring/entities/product/model/product";
 import { useCart, useCoupons, useProducts } from "../../refactoring/hooks";
 import * as cartUtils from "../../refactoring/models/cart";
+import * as model from "@/refactoring/features/cart/model";
 
 const mockProducts: Product[] = [
   {
@@ -357,24 +358,24 @@ describe("basic > ", () => {
     describe("calculateItemTotal", () => {
       test("할인 없이 총액을 계산해야 합니다.", () => {
         const item: CartItem = { product: testProduct, quantity: 1 };
-        expect(cartUtils.calculateItemTotal(item)).toBe(100);
+        expect(model.calculateItemTotal(item)).toBe(100);
       });
 
       test("수량에 따라 올바른 할인을 적용해야 합니다.", () => {
         const item: CartItem = { product: testProduct, quantity: 5 };
-        expect(cartUtils.calculateItemTotal(item)).toBe(400); // 500 * 0.8
+        expect(model.calculateItemTotal(item)).toBe(400); // 500 * 0.8
       });
     });
 
     describe("getMaxApplicableDiscount", () => {
       test("할인이 적용되지 않으면 0을 반환해야 합니다.", () => {
         const item: CartItem = { product: testProduct, quantity: 1 };
-        expect(cartUtils.getMaxApplicableDiscount(item)).toBe(0);
+        expect(model.getMaxApplicableDiscount(item)).toBe(0);
       });
 
       test("적용 가능한 가장 높은 할인율을 반환해야 합니다.", () => {
         const item: CartItem = { product: testProduct, quantity: 5 };
-        expect(cartUtils.getMaxApplicableDiscount(item)).toBe(0.2);
+        expect(model.getMaxApplicableDiscount(item)).toBe(0.2);
       });
     });
 
@@ -385,7 +386,7 @@ describe("basic > ", () => {
       ];
 
       test("쿠폰 없이 총액을 올바르게 계산해야 합니다.", () => {
-        const result = cartUtils.calculateCartTotal(cart, null);
+        const result = model.calculateCartTotal(cart, null);
         expect(result.totalBeforeDiscount).toBe(400);
         expect(result.totalAfterDiscount).toBe(380);
         expect(result.totalDiscount).toBe(20);
@@ -398,7 +399,7 @@ describe("basic > ", () => {
           discountType: "amount",
           discountValue: 50,
         };
-        const result = cartUtils.calculateCartTotal(cart, coupon);
+        const result = model.calculateCartTotal(cart, coupon);
         expect(result.totalAfterDiscount).toBe(330);
         expect(result.totalDiscount).toBe(70);
       });
@@ -410,7 +411,7 @@ describe("basic > ", () => {
           discountType: "percentage",
           discountValue: 10,
         };
-        const result = cartUtils.calculateCartTotal(cart, coupon);
+        const result = model.calculateCartTotal(cart, coupon);
         expect(result.totalAfterDiscount).toBe(342);
         expect(result.totalDiscount).toBe(58);
       });
@@ -423,19 +424,19 @@ describe("basic > ", () => {
       ];
 
       test("수량을 올바르게 업데이트해야 합니다", () => {
-        const updatedCart = cartUtils.updateCartItemQuantity(cart, "1", 5);
+        const updatedCart = model.updateCartItemQuantity(cart, "1", 5);
         expect(updatedCart[0].quantity).toBe(5);
         expect(updatedCart[1].quantity).toBe(1);
       });
 
       test("수량이 0으로 설정된 경우 항목을 제거해야 합니다.", () => {
-        const updatedCart = cartUtils.updateCartItemQuantity(cart, "1", 0);
+        const updatedCart = model.updateCartItemQuantity(cart, "1", 0);
         expect(updatedCart.length).toBe(1);
         expect(updatedCart[0].product.id).toBe("2");
       });
 
       test("재고 한도를 초과해서는 안 됩니다.", () => {
-        const updatedCart = cartUtils.updateCartItemQuantity(cart, "1", 15);
+        const updatedCart = model.updateCartItemQuantity(cart, "1", 15);
         expect(updatedCart[0].quantity).toBe(10); // max stock is 10
       });
     });

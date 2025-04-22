@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CartItem } from "../../types.ts";
+import { CartItem } from "@/refactoring/features/cart/model.ts";
 import { Coupon } from "@/refactoring/entities/coupon/model.ts";
 import { Product } from "../../refactoring/entities/product/model/product.ts";
 
