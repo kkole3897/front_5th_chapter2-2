@@ -1,7 +1,7 @@
+import { Product } from "@/refactoring/entities/product";
+import { Discount } from "@/refactoring/entities/product/model/discount";
+import { Coupon } from "@/types";
 import { useState } from "react";
-import { Coupon } from "../../types.ts";
-import { Discount } from "../entities/product/model/discount.ts";
-import { Product } from "../entities/product/model/product.ts";
 
 interface Props {
   products: Product[];
@@ -11,7 +11,7 @@ interface Props {
   onCouponAdd: (newCoupon: Coupon) => void;
 }
 
-export const AdminPage = ({
+const AdminPage = ({
   products,
   coupons,
   onProductUpdate,
@@ -444,3 +444,5 @@ export const AdminPage = ({
     </div>
   );
 };
+
+export default AdminPage;

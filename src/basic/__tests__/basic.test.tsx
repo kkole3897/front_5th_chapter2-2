@@ -9,7 +9,7 @@ import {
   within,
 } from "@testing-library/react";
 import { CartPage } from "../../refactoring/components/CartPage";
-import { AdminPage } from "../../refactoring/components/AdminPage";
+import AdminPage from "@/refactoring/pages/admin";
 import { CartItem, Coupon } from "../../types";
 import { Product } from "../../refactoring/entities/product/model/product";
 import { useCart, useCoupons, useProducts } from "../../refactoring/hooks";
