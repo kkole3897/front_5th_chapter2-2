@@ -8,7 +8,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-import { CartPage } from "../../refactoring/components/CartPage";
+import CartPage from "@/refactoring/pages/cart";
 import AdminPage from "@/refactoring/pages/admin";
 import { CartItem, Coupon } from "../../types";
 import { Product } from "../../refactoring/entities/product/model/product";

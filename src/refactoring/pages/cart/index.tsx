@@ -1,13 +1,13 @@
-import { CartItem, Coupon } from "../../types.ts";
-import { Product } from "../entities/product/model/product.ts";
-import { useCart } from "../hooks";
+import { Product } from "@/refactoring/entities/product";
+import { useCart } from "@/refactoring/hooks";
+import { Coupon, CartItem } from "@/types";
 
 interface Props {
   products: Product[];
   coupons: Coupon[];
 }
 
-export const CartPage = ({ products, coupons }: Props) => {
+const CartPage = ({ products, coupons }: Props) => {
   const {
     cart,
     addToCart,
@@ -201,3 +201,5 @@ export const CartPage = ({ products, coupons }: Props) => {
     </div>
   );
 };
+
+export default CartPage;

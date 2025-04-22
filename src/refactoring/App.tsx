@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CartPage } from "./components/CartPage.tsx";
+import CartPage from "./pages/cart/index.tsx";
 import AdminPage from "./pages/admin/index.tsx";
 import { Coupon } from "../types.ts";
 import { Product } from "./entities/product/model/product.ts";
