@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { CartPage } from "../components/CartPage";
-import { Coupon } from "../../types";
+import { Coupon } from "@/refactoring/entities/coupon/model.ts";
 import { Product } from "../../refactoring/entities/product/model/product.ts";
 import { AdminPage } from "../components/AdminPage.tsx";
 import { useState } from "react";

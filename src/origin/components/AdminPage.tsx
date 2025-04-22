@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Coupon } from "../../types";
+import { Coupon } from "@/refactoring/entities/coupon/model";
 import { Discount } from "@/refactoring/entities/product/model/discount";
 import { Product } from "../../refactoring/entities/product/model/product";
 

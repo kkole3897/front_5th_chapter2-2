@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CartPage } from "./components/CartPage.tsx";
 import { AdminPage } from "./components/AdminPage.tsx";
-import { Coupon } from "../types.ts";
+import { Coupon } from "@/refactoring/entities/coupon/model.ts";
 import { Product } from "../refactoring/entities/product/model/product.ts";
 
 const initialProducts: Product[] = [

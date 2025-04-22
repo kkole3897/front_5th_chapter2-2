@@ -1,4 +1,5 @@
-import { CartItem, Coupon } from "../../types";
+import { CartItem } from "../../types";
+import { Coupon } from "../entities/coupon/model";
 import { Product } from "../entities/product/model/product";
 import { DISCOUNT_TYPE } from "../entities/coupon";
 
