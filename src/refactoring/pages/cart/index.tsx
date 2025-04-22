@@ -1,7 +1,7 @@
-import { Product } from "@/refactoring/entities/product";
 import { useCart } from "@/refactoring/hooks";
-import { CartItem } from "@/refactoring/features/cart/model";
-import { Coupon } from "@/refactoring/entities/coupon/model";
+import { CartItem } from "@/refactoring/features/cart";
+import { Product } from "@/refactoring/entities/product";
+import { Coupon } from "@/refactoring/entities/coupon";
 
 interface Props {
   products: Product[];

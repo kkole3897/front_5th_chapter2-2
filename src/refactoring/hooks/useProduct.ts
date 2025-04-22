@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Product } from "../entities/product/model/product.ts";
+
+import { Product } from "@/refactoring/entities/product";
 
 export const useProducts = (initialProducts: Product[]) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);

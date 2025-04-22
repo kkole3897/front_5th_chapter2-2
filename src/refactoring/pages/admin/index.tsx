@@ -1,7 +1,7 @@
-import { Product } from "@/refactoring/entities/product";
-import { Discount } from "@/refactoring/entities/product/model/discount";
-import { Coupon } from "@/refactoring/entities/coupon/model";
 import { useState } from "react";
+
+import { Product, Discount } from "@/refactoring/entities/product";
+import { Coupon } from "@/refactoring/entities/coupon";
 
 interface Props {
   products: Product[];

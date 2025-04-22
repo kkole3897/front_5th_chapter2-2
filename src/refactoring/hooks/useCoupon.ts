@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Coupon } from "../entities/coupon/model.ts";
+
+import { Coupon } from "@/refactoring/entities/coupon";
 
 export const useCoupons = (initialCoupons: Coupon[]) => {
   const [coupons, setCoupons] = useState<Coupon[]>(initialCoupons);

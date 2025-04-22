@@ -1,5 +1,4 @@
-import { DISCOUNT_TYPE } from "@/refactoring/entities/coupon";
-import { Coupon } from "@/refactoring/entities/coupon/model";
+import { DISCOUNT_TYPE, Coupon } from "@/refactoring/entities/coupon";
 import { Product } from "@/refactoring/entities/product";
 
 export interface CartItem {

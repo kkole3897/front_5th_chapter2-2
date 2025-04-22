@@ -1,16 +1,17 @@
 // useCart.ts
 import { useState } from "react";
-import { CartItem } from "../features/cart/model";
-import { Coupon } from "../entities/coupon/model";
-import { Product } from "../entities/product/model/product";
+
 import {
   calculateCartTotal,
   updateCartItemQuantity,
   createCartItem,
   removeCartItem,
   findCartItemByProductId,
-} from "../features/cart/model";
-import { OutOfStockError } from "../entities/product/model/errors";
+  CartItem,
+} from "@/refactoring/features/cart";
+import { Coupon } from "@/refactoring/entities/coupon";
+import { Product, OutOfStockError } from "@/refactoring/entities/product";
+
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
