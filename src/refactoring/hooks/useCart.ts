@@ -1,6 +1,7 @@
 // useCart.ts
 import { useState } from "react";
-import { CartItem, Coupon, Product } from "../../types";
+import { CartItem, Coupon } from "../../types";
+import { Product } from "../entities/product/model/product";
 import {
   calculateCartTotal,
   updateCartItemQuantity,

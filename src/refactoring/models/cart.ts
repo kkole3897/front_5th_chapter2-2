@@ -1,4 +1,5 @@
-import { CartItem, Coupon, Product } from "../../types";
+import { CartItem, Coupon } from "../../types";
+import { Product } from "../entities/product/model/product";
 import { DISCOUNT_TYPE } from "../entities/coupon";
 
 const isApplicableDiscount = (

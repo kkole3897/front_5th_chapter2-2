@@ -1,4 +1,4 @@
-import { Product } from "../../types";
+import { Product } from "../entities/product/model/product";
 
 export class OutOfStockError extends Error {
   static readonly name = "OutOfStockError";
