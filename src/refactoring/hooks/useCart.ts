@@ -9,7 +9,7 @@ import {
   removeCartItem,
   findCartItemByProductId,
 } from "../models/cart";
-import { OutOfStockError } from "../models/product";
+import { OutOfStockError } from "../entities/product/model/errors";
 export const useCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
