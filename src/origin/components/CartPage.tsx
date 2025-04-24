@@ -5,6 +5,7 @@ import { Product, ProductInfoCard } from "@/refactoring/entities/product";
 import {
   AddToCartButton,
   ManageCartItemCard,
+  CartSummaryDisplay,
 } from "@/refactoring/features/cart";
 import { CouponSelect } from "@/refactoring/features/coupon";
 import { SelectedCouponDisplay } from "@/refactoring/entities/coupon";
@@ -18,7 +19,7 @@ export const CartPage = ({ products, coupons }: Props) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
 
-  const addToCart = (product: Product) => {
+  const handleClickAddToCartButton = (product: Product) => {
     const remainingStock = getRemainingStock(product);
     if (remainingStock <= 0) return;
 
@@ -63,55 +64,12 @@ export const CartPage = ({ products, coupons }: Props) => {
     );
   };
 
-  const calculateTotal = () => {
-    let totalBeforeDiscount = 0;
-    let totalAfterDiscount = 0;
-
-    cart.forEach((item) => {
-      const { price } = item.product;
-      const { quantity } = item;
-      totalBeforeDiscount += price * quantity;
-
-      const discount = item.product.discounts.reduce((maxDiscount, d) => {
-        return quantity >= d.quantity && d.rate > maxDiscount
-          ? d.rate
-          : maxDiscount;
-      }, 0);
-
-      totalAfterDiscount += price * quantity * (1 - discount);
-    });
-
-    let totalDiscount = totalBeforeDiscount - totalAfterDiscount;
-
-    // 쿠폰 적용
-    if (selectedCoupon) {
-      if (selectedCoupon.discountType === "amount") {
-        totalAfterDiscount = Math.max(
-          0,
-          totalAfterDiscount - selectedCoupon.discountValue
-        );
-      } else {
-        totalAfterDiscount *= 1 - selectedCoupon.discountValue / 100;
-      }
-      totalDiscount = totalBeforeDiscount - totalAfterDiscount;
-    }
-
-    return {
-      totalBeforeDiscount: Math.round(totalBeforeDiscount),
-      totalAfterDiscount: Math.round(totalAfterDiscount),
-      totalDiscount: Math.round(totalDiscount),
-    };
-  };
-
   const getRemainingStock = (product: Product) => {
     const cartItem = cart.find((item) => item.product.id === product.id);
     return product.stock - (cartItem?.quantity || 0);
   };
 
-  const { totalBeforeDiscount, totalAfterDiscount, totalDiscount } =
-    calculateTotal();
-
-  const applyCoupon = (coupon: Coupon) => {
+  const handleChangeSelectedCoupon = (coupon: Coupon) => {
     setSelectedCoupon(coupon);
   };
 
@@ -132,7 +90,7 @@ export const CartPage = ({ products, coupons }: Props) => {
                   footer={
                     <AddToCartButton
                       remainingStock={remainingStock}
-                      onClick={() => addToCart(product)}
+                      onClick={() => handleClickAddToCartButton(product)}
                     />
                   }
                 />
@@ -158,24 +116,18 @@ export const CartPage = ({ products, coupons }: Props) => {
 
           <div className="mt-6 bg-white p-4 rounded shadow">
             <h2 className="text-2xl font-semibold mb-2">쿠폰 적용</h2>
-            {<CouponSelect coupons={coupons} onChange={applyCoupon} />}
+            {
+              <CouponSelect
+                coupons={coupons}
+                onChange={handleChangeSelectedCoupon}
+              />
+            }
             {selectedCoupon && (
               <SelectedCouponDisplay coupon={selectedCoupon} />
             )}
           </div>
 
-          <div className="mt-6 bg-white p-4 rounded shadow">
-            <h2 className="text-2xl font-semibold mb-2">주문 요약</h2>
-            <div className="space-y-1">
-              <p>상품 금액: {totalBeforeDiscount.toLocaleString()}원</p>
-              <p className="text-green-600">
-                할인 금액: {totalDiscount.toLocaleString()}원
-              </p>
-              <p className="text-xl font-bold">
-                최종 결제 금액: {totalAfterDiscount.toLocaleString()}원
-              </p>
-            </div>
-          </div>
+          {<CartSummaryDisplay cart={cart} selectedCoupon={selectedCoupon} />}
         </div>
       </div>
     </div>
