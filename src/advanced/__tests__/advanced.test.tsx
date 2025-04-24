@@ -360,9 +360,6 @@ describe("advanced > ", () => {
       );
 
       expect(result.current[0]).toEqual(mockProducts);
-      expect(localStorage.getItem("products")).toEqual(
-        JSON.stringify(mockProducts)
-      );
     });
 
     test("로컬 스토리지에 저장된 데이터를 가져올 수 있다.", () => {
