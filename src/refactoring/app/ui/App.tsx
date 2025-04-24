@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import CartPage from "@/refactoring/pages/cart";
-import AdminPage from "@/refactoring/pages/admin";
+import { CartPage } from "@/refactoring/pages/cart";
+import { AdminPage } from "@/refactoring/pages/admin";
 import { Coupon } from "@/refactoring/entities/coupon";
 import { Product } from "@/refactoring/entities/product";
 import { useCoupons, useProducts } from "@/refactoring/hooks";
