@@ -18,41 +18,41 @@ export const REQUIRED_CREATE_PRODUCT_PROPERTIES = [
   "price",
   "stock",
 ] as const;
-type RequiredCreateProductProperty =
+type RequiredCreateProductProperties =
   (typeof REQUIRED_CREATE_PRODUCT_PROPERTIES)[number];
 
-export type CreateProductInput = Partial<
-  Pick<Product, RequiredCreateProductProperty>
+export type CreateProductProperties = Partial<
+  Pick<Product, RequiredCreateProductProperties>
 >;
 
 export const createProduct = (
   products: Product[],
-  newProductInput: CreateProductInput
+  newProductProperties: CreateProductProperties
 ) => {
-  if (!validateMissingRequiredProperties(newProductInput)) {
-    throw new MissingRequiredProductPropertyError(newProductInput);
+  if (!validateMissingRequiredProperties(newProductProperties)) {
+    throw new MissingRequiredProductPropertyError(newProductProperties);
   }
 
-  if (!validateProductName(newProductInput.name)) {
-    throw new InvalidProductNameError(newProductInput.name);
+  if (!validateProductName(newProductProperties.name)) {
+    throw new InvalidProductNameError(newProductProperties.name);
   }
 
-  if (!validateDuplicatedProductName(products, newProductInput.name)) {
-    throw new DuplicatedProductNameError(newProductInput.name);
+  if (!validateDuplicatedProductName(products, newProductProperties.name)) {
+    throw new DuplicatedProductNameError(newProductProperties.name);
   }
 
   const newProduct = {
     id: generateProductId(),
     discounts: [],
-    ...newProductInput,
+    ...newProductProperties,
   };
 
   return [...products, newProduct];
 };
 
 function validateMissingRequiredProperties(
-  newProductInput: CreateProductInput
-): newProductInput is Required<CreateProductInput> {
+  newProductInput: CreateProductProperties
+): newProductInput is Required<CreateProductProperties> {
   const { name, price, stock } = newProductInput;
 
   if (name === undefined || price === undefined || stock === undefined) {
@@ -87,3 +87,9 @@ function generateProductId(): string {
 
   return `p${id}`;
 }
+
+export const updateProduct = (products: Product[], updatedProduct: Product) => {
+  return products.map((product) =>
+    product.id === updatedProduct.id ? updatedProduct : product
+  );
+};

@@ -1,5 +1,5 @@
 import {
-  CreateProductInput,
+  CreateProductProperties,
   Product,
   REQUIRED_CREATE_PRODUCT_PROPERTIES,
 } from "./product";
@@ -7,8 +7,10 @@ import {
 export class MissingRequiredProductPropertyError extends Error {
   static readonly NAME = "MissingRequiredProductPropertyError";
 
-  constructor(public readonly createProductInput: CreateProductInput) {
-    const givenProperties = Object.keys(createProductInput);
+  constructor(
+    public readonly createProductProperties: CreateProductProperties
+  ) {
+    const givenProperties = Object.keys(createProductProperties);
     const missingProperties = REQUIRED_CREATE_PRODUCT_PROPERTIES.filter(
       (property) => !givenProperties.includes(property)
     );

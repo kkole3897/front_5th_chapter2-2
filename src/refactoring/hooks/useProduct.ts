@@ -1,24 +1,23 @@
 import { useState } from "react";
 
-import { Product } from "@/refactoring/entities/product";
+import {
+  Product,
+  CreateProductProperties,
+  createProduct,
+  updateProduct as updateProductModel,
+} from "@/refactoring/entities/product";
 
 export const useProducts = (initialProducts: Product[]) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
   const updateProduct = (updatedProduct: Product) => {
-    const newProducts = products.map((product) => {
-      if (product.id === updatedProduct.id) {
-        return updatedProduct;
-      }
-
-      return product;
-    });
-
-    setProducts(newProducts);
+    setProducts((oldProducts) =>
+      updateProductModel(oldProducts, updatedProduct)
+    );
   };
 
-  const addProduct = (newProduct: Product) => {
-    setProducts([...products, newProduct]);
+  const addProduct = (newProduct: CreateProductProperties) => {
+    setProducts((oldProducts) => createProduct(oldProducts, newProduct));
   };
 
   return {
