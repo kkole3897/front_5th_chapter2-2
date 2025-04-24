@@ -53,6 +53,18 @@ const App = () => {
   const { coupons, addCoupon } = useCoupons(initialCoupons);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const handleProductUpdate = (updatedProduct: Product) => {
+    updateProduct(updatedProduct);
+  };
+
+  const handleProductAdd = (newProduct: Product) => {
+    addProduct(newProduct);
+  };
+
+  const handleCouponAdd = (newCoupon: Coupon) => {
+    addCoupon(newCoupon);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-blue-600 text-white p-4">
@@ -71,9 +83,9 @@ const App = () => {
           <AdminPage
             products={products}
             coupons={coupons}
-            onProductUpdate={updateProduct}
-            onProductAdd={addProduct}
-            onCouponAdd={addCoupon}
+            onProductUpdate={handleProductUpdate}
+            onProductAdd={handleProductAdd}
+            onCouponAdd={handleCouponAdd}
           />
         ) : (
           <CartPage products={products} coupons={coupons} />
