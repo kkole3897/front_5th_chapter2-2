@@ -8,11 +8,16 @@ import {
   screen,
   within,
 } from "@testing-library/react";
+
 import { CartPage } from "@/refactoring/pages/cart";
 import { AdminPage } from "@/refactoring/pages/admin";
 import { CartItem } from "@/refactoring/features/cart";
 import { Coupon } from "@/refactoring/entities/coupon";
-import { Product } from "@/refactoring/entities/product";
+import {
+  Product,
+  CreateProductProperties,
+  createProduct,
+} from "@/refactoring/entities/product";
 import { useCart, useCoupons, useProducts } from "@/refactoring/hooks";
 import * as model from "@/refactoring/features/cart/model";
 
@@ -64,8 +69,8 @@ const TestAdminPage = () => {
     );
   };
 
-  const handleProductAdd = (newProduct: Product) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  const handleProductAdd = (newProduct: CreateProductProperties) => {
+    setProducts((prevProducts) => createProduct(prevProducts, newProduct));
   };
 
   const handleCouponAdd = (newCoupon: Coupon) => {
