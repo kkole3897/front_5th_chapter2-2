@@ -15,6 +15,15 @@ export default mergeConfig(
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    base: "./",
+    build: {
+      rollupOptions: {
+        input: {
+          origin: "./index.origin.html",
+          refactoring: "./index.refactoring.html",
+        },
+      },
+    },
   }),
   defineTestConfig({
     test: {
