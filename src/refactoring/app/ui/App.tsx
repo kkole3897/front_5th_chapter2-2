@@ -2,12 +2,13 @@ import { useState } from "react";
 
 import { CartPage } from "@/refactoring/pages/cart";
 import { AdminPage } from "@/refactoring/pages/admin";
+import { useProducts } from "@/refactoring/features/product";
 import { Coupon } from "@/refactoring/entities/coupon";
 import {
   Product,
   CreateProductProperties,
 } from "@/refactoring/entities/product";
-import { useCoupons, useProducts } from "@/refactoring/hooks";
+import { useCoupons } from "@/refactoring/hooks";
 
 const initialProducts: Product[] = [
   {

@@ -1,11 +1,9 @@
+import { CreateProductProperties } from "@/refactoring/entities/product";
 import { useState } from "react";
-
-import { CreateProductProperties } from "../model/product";
 
 interface CreateProductFormProps {
   onCreate?: (product: CreateProductProperties) => void;
 }
-
 const CreateProductForm = ({ onCreate }: CreateProductFormProps) => {
   const [newProductFormState, setNewProductFormState] = useState<
     Required<CreateProductProperties>
@@ -101,5 +99,4 @@ const CreateProductForm = ({ onCreate }: CreateProductFormProps) => {
     </div>
   );
 };
-
 export default CreateProductForm;

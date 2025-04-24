@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import { CreateProductForm } from "@/refactoring/features/product";
 import {
   Product,
   Discount,
   CreateProductProperties,
-  CreateProductForm,
 } from "@/refactoring/entities/product";
 import { Coupon } from "@/refactoring/entities/coupon";
 
