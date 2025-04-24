@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { describe, expect, test } from "vitest";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
+
 import { CartPage } from "@/refactoring/pages/cart";
 import { AdminPage } from "@/refactoring/pages/admin";
+import { useProducts } from "@/refactoring/features/product";
+import { useCoupons } from "@/refactoring/features/coupon";
 import { Coupon } from "@/refactoring/entities/coupon/model";
 import {
   Product,
@@ -10,6 +12,7 @@ import {
   MissingRequiredProductPropertyError,
   InvalidProductNameError,
   DuplicatedProductNameError,
+  CreateProductProperties,
 } from "@/refactoring/entities/product";
 
 const mockProducts: Product[] = [
@@ -51,21 +54,19 @@ const mockCoupons: Coupon[] = [
 ];
 
 const TestAdminPage = () => {
-  const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [coupons, setCoupons] = useState<Coupon[]>(mockCoupons);
+  const { products, updateProduct, addProduct } = useProducts(mockProducts);
+  const { coupons, addCoupon } = useCoupons(mockCoupons);
 
   const handleProductUpdate = (updatedProduct: Product) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-    );
+    updateProduct(updatedProduct);
   };
 
-  const handleProductAdd = (newProduct: Product) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]);
+  const handleProductAdd = (newProduct: CreateProductProperties) => {
+    addProduct(newProduct);
   };
 
   const handleCouponAdd = (newCoupon: Coupon) => {
-    setCoupons((prevCoupons) => [...prevCoupons, newCoupon]);
+    addCoupon(newCoupon);
   };
 
   return (
