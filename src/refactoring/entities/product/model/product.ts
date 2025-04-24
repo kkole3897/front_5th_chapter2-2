@@ -42,7 +42,7 @@ export const createProduct = (
   }
 
   const newProduct = {
-    id: generateProductId(),
+    id: `p${products.length + 1}`,
     discounts: [],
     ...newProductProperties,
   };
@@ -79,13 +79,6 @@ function validateDuplicatedProductName(
   }
 
   return true;
-}
-
-let id = 0;
-function generateProductId(): string {
-  id += 1;
-
-  return `p${id}`;
 }
 
 export const updateProduct = (products: Product[], updatedProduct: Product) => {
