@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { describe, expect, test } from "vitest";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
-import CartPage from "@/refactoring/pages/cart";
-import AdminPage from "@/refactoring/pages/admin";
+import { CartPage } from "@/refactoring/pages/cart";
+import { AdminPage } from "@/refactoring/pages/admin";
 import { Coupon } from "@/refactoring/entities/coupon/model";
 import {
   Product,
