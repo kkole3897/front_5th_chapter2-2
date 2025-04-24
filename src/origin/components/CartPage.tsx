@@ -7,6 +7,7 @@ import {
   ManageCartItemCard,
 } from "@/refactoring/features/cart";
 import { CouponSelect } from "@/refactoring/features/coupon";
+import { SelectedCouponDisplay } from "@/refactoring/entities/coupon";
 
 interface Props {
   products: Product[];
@@ -159,13 +160,7 @@ export const CartPage = ({ products, coupons }: Props) => {
             <h2 className="text-2xl font-semibold mb-2">쿠폰 적용</h2>
             {<CouponSelect coupons={coupons} onChange={applyCoupon} />}
             {selectedCoupon && (
-              <p className="text-green-600">
-                적용된 쿠폰: {selectedCoupon.name}(
-                {selectedCoupon.discountType === "amount"
-                  ? `${selectedCoupon.discountValue}원`
-                  : `${selectedCoupon.discountValue}%`}{" "}
-                할인)
-              </p>
+              <SelectedCouponDisplay coupon={selectedCoupon} />
             )}
           </div>
 
