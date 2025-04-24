@@ -1,14 +1,16 @@
-import { useState } from "react";
-
 import {
   Product,
   updateProduct as updateProductModel,
   CreateProductProperties,
   createProduct,
 } from "@/refactoring/entities/product";
+import { useLocalStorage } from "@/refactoring/shared/lib/hooks";
 
 export const useProducts = (initialProducts: Product[]) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useLocalStorage<Product[]>(
+    "products",
+    initialProducts
+  );
 
   const updateProduct = (updatedProduct: Product) => {
     setProducts((oldProducts) =>

@@ -1,5 +1,12 @@
-import { describe, expect, test } from "vitest";
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { describe, expect, test, beforeEach } from "vitest";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  within,
+  renderHook,
+} from "@testing-library/react";
 
 import { CartPage } from "@/refactoring/pages/cart";
 import { AdminPage } from "@/refactoring/pages/admin";
@@ -14,6 +21,7 @@ import {
   DuplicatedProductNameError,
   CreateProductProperties,
 } from "@/refactoring/entities/product";
+import { useLocalStorage } from "@/refactoring/shared/lib/hooks";
 
 const mockProducts: Product[] = [
   {
@@ -269,7 +277,7 @@ describe("advanced > ", () => {
     });
   });
 
-  describe("product entity", () => {
+  describe("product entity > ", () => {
     describe("createProduct", () => {
       test("이름, 가격, 재고를 받아 새로운 상품을 생성할 수 있다.", () => {
         const products: Product[] = [];
@@ -339,9 +347,57 @@ describe("advanced > ", () => {
         );
       });
     });
+  });
 
-    test("새로운 hook 함수르 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
-      expect(true).toBe(false);
+  describe("useLocalStorage > ", () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+
+    test("로컬 스토리지에 초기 데이터를 저장할 수 있다.", () => {
+      const { result } = renderHook(() =>
+        useLocalStorage("products", mockProducts)
+      );
+
+      expect(result.current[0]).toEqual(mockProducts);
+      expect(localStorage.getItem("products")).toEqual(
+        JSON.stringify(mockProducts)
+      );
+    });
+
+    test("로컬 스토리지에 저장된 데이터를 가져올 수 있다.", () => {
+      localStorage.setItem("products", JSON.stringify(mockProducts));
+
+      const { result } = renderHook(() => useLocalStorage("products", []));
+
+      expect(result.current[0]).toEqual(mockProducts);
+    });
+
+    test("훅을 통해 데이터를 수정할 수 있다.", () => {
+      const { result } = renderHook(() =>
+        useLocalStorage<Product[]>("products", [])
+      );
+
+      act(() => {
+        result.current[1](mockProducts);
+      });
+
+      expect(result.current[0]).toEqual(mockProducts);
+      expect(localStorage.getItem("products")).toEqual(
+        JSON.stringify(mockProducts)
+      );
+    });
+
+    test("훅을 통해 데이터를 삭제할 수 있다.", () => {
+      const { result } = renderHook(() =>
+        useLocalStorage<Product[]>("products", [])
+      );
+
+      act(() => {
+        result.current[2]();
+      });
+
+      expect(localStorage.getItem("products")).toBeNull();
     });
   });
 });

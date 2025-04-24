@@ -85,14 +85,14 @@ const App = () => {
       <main className="container mx-auto mt-6">
         {isAdmin ? (
           <AdminPage
-            products={products}
+            products={products ?? []}
             coupons={coupons}
             onProductUpdate={handleProductUpdate}
             onProductAdd={handleProductAdd}
             onCouponAdd={handleCouponAdd}
           />
         ) : (
-          <CartPage products={products} coupons={coupons} />
+          <CartPage products={products ?? []} coupons={coupons} />
         )}
       </main>
     </div>
